@@ -26,8 +26,11 @@ jobs:
       - name: Deploy to Dev
         run: serverless deploy --stage dev
       
-      - name: Schedule Removal
-        run: echo "sleep 60 && serverless remove --stage dev" | at now
+      - name: Waiting 60 Seconds to Remove Dev Environment
+        run: sleep 60
+
+      - name: Remove Dev Environment
+        run: serverless remove --stage dev
 
   deploy-production:
     if: github.ref == 'refs/heads/main'
