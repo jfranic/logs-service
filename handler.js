@@ -5,7 +5,7 @@ module.exports.hello = async (event) => {
   const response = {
     statusCode: 200,
     body: JSON.stringify({
-      message: `Current stage: ${currentStage}`
+      message: `You are executing API on a ${currentStage} stage.`
     }),
   };
   return response;
