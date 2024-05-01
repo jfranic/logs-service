@@ -18,6 +18,11 @@ jobs:
       - name: Install Serverless Framework
         run: npm install -g serverless
 
+      - name: Set AWS credentials
+        run: |
+          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
       - name: Deploy to Dev
         run: serverless deploy --stage dev
 
@@ -31,6 +36,11 @@ jobs:
 
       - name: Install Serverless Framework
         run: npm install -g serverless
+
+      - name: Set AWS credentials
+        run: |
+          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Deploy to Production
         run: serverless deploy --stage production
