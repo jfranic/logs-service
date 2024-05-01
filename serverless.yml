@@ -1,0 +1,18 @@
+service: logs-service
+
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  stage: ${opt:stage, 'dev'}
+  environment:
+    CURRENT_STAGE: ${opt:stage, self:provider.stage}
+
+functions:
+  hello:
+    handler: handler.hello
+    events:
+      - http:
+          path: hello
+          method: get

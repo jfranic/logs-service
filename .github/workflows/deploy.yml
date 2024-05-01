@@ -1,0 +1,36 @@
+name: Serverless Deploy
+
+on:
+  push:
+    branches:
+      - dev
+      - main
+
+jobs:
+  deploy-dev:
+    if: github.ref == 'refs/heads/dev'
+    name: Deploy to Dev
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Serverless Framework
+        run: npm install -g serverless
+
+      - name: Deploy to Dev
+        run: serverless deploy --stage dev
+
+  deploy-production:
+    if: github.ref == 'refs/heads/main'
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Serverless Framework
+        run: npm install -g serverless
+
+      - name: Deploy to Production
+        run: serverless deploy --stage production
