@@ -26,8 +26,19 @@ jobs:
       - name: Deploy to Dev
         run: serverless deploy --stage dev
       
-      - name: Waiting 60 Seconds to Remove Dev Environment
-        run: sleep 60
+      - name: Calculate remaining time until 2 AM in Zagreb time
+        id: calculate-time
+        run: |
+          remaining_time=$(TZ="Europe/Zagreb" date -d '00:40 tomorrow' +%s)
+          current_time=$(date +%s)
+          if [[ $remaining_time -lt $current_time ]]; then
+            remaining_time=$((remaining_time + 24*3600))
+          fi
+          remaining_seconds=$((remaining_time - current_time))
+          echo "::set-output name=remaining-time::$remaining_seconds"
+
+      - name: Sleep until 2 AM in Zagreb time
+        run: sleep ${{ steps.calculate-time.outputs.remaining-time }}
 
       - name: Remove Dev Environment
         run: serverless remove --stage dev
