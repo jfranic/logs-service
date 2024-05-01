@@ -25,6 +25,9 @@ jobs:
 
       - name: Deploy to Dev
         run: serverless deploy --stage dev
+      
+      - name: Schedule Removal
+        run: echo "sleep 60 && serverless remove --stage dev" | at now
 
   deploy-production:
     if: github.ref == 'refs/heads/main'
